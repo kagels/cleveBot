@@ -1,1 +1,3 @@
 # cleveBot
+
+basic MAL bot
