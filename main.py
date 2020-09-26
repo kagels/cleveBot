@@ -86,17 +86,13 @@ async def scores(ctx, username, score): ## gets specified scores from users anim
     else:
         await ctx.send("Invalid arguments for command scores, correct usage is !scores $username $score - check your username spelling.")
 
-@bot.command()
-async def commandlist(ctx):
-    await ctx.send("List of commands can be found at https://github.com/kagels/cleveBot")
-
 @bot.event
 async def on_ready():
     logging.warning("bot initialized")
 
 @bot.event
-async def on_command_error(error, ctx): ## seems broken atm no idea why
+async def on_command_error(ctx, error): ## okay is fixed
     if isinstance(error, commands.CommandNotFound):
-        await ctx.send("Unrecognized command, call !commandlist for a list of commands")
+        await ctx.send("Unrecognized command, check https://github.com/kagels/cleveBot for a list of commands")
 
 bot.run(token)
