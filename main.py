@@ -63,7 +63,7 @@ async def seasonal(ctx, year=None, season=None): ## defaults to current season w
     await ctx.send(url)
 
 @bot.command()
-async def user(ctx, username): ## literally just get user url
+async def user(ctx, username=None): ## literally just get user url after checking for empty input
     if username:  
         url = requs.getUser(username)
         await ctx.send(url)
@@ -74,15 +74,15 @@ async def user(ctx, username): ## literally just get user url
 async def scores(ctx, username, score): ## gets specified scores from users animulist
     scores = requs.getUserScores(username, score)
     if scores:
-        scoresString = "User {0} has given {1}s to: ".format(username, score)
+        scoresString = ""
         for x in range(len(scores)): ## add scores to a string along with some simple formatting
             if x != len(scores)-1:
-                scoresString+=(scores[x] + ", ")
+                scoresString+=(scores[x] + "\n")
             else:
-                scoresString+=(scores[x] + ".") 
+                scoresString+=(scores[x]) 
         if not scores:
             scoresString+="fucking nothing." ## pretty self explanatory but this is all we add if the list is empty
-        await ctx.send(scoresString)
+        await ctx.send("User {0} has given {1}s to: ".format(username, score) + "```\n" + scoresString + "```") ## lol
     else:
         await ctx.send("Invalid arguments for command scores, correct usage is !scores $username $score - check your username spelling.")
 
