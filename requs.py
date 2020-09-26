@@ -28,14 +28,20 @@ def getUser(username):
     url = "https://api.jikan.moe/v3/user/{0}".format(username)
     resp = requests.get(url)
     respJson = resp.json()
-    return respJson['url']
+    try:
+        return respJson['url']
+    except KeyError:
+        return("Username not found, check your spelling and try again.")
 
 def getUserScores(username, score):
     url = "https://api.jikan.moe/v3/user/{0}/animelist/all".format(username)
     resp = requests.get(url)
     respJson = resp.json()
     scoreList = []
-    for item in respJson['anime']:
-        if item['score'] == int(score):
-            scoreList.append(item['title'])
-    return scoreList
+    try:
+        for item in respJson['anime']:
+            if item['score'] == int(score):
+                scoreList.append(item['title'])
+        return scoreList
+    except KeyError:
+        return None
